@@ -9,6 +9,7 @@ function App() {
       <nav>
         <Link to="/">Home</Link>
       </nav>
+
       <Routes>
         <Route
           path="/"
