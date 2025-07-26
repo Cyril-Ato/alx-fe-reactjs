@@ -5,40 +5,41 @@ export const useRecipeStore = create((set, get) => ({
   filteredRecipes: [],
   searchTerm: '',
 
-  addRecipe: (newRecipe) =>
-    set((state) => {
-      const updated = [...state.recipes, newRecipe];
-      return {
-        recipes: updated,
-        filteredRecipes: get().applyFilter(updated, state.searchTerm),
-      };
-    }),
+  favorites: [],
+  recommendations: [],
 
-  deleteRecipe: (id) =>
-    set((state) => {
-      const updated = state.recipes.filter((r) => r.id !== id);
-      return {
-        recipes: updated,
-        filteredRecipes: get().applyFilter(updated, state.searchTerm),
-      };
-    }),
+  addRecipe: (newRecipe) => {
+    const updated = [...get().recipes, newRecipe];
+    return set({
+      recipes: updated,
+      filteredRecipes: get().applyFilter(updated, get().searchTerm),
+    });
+  },
 
-  updateRecipe: (updatedRecipe) =>
-    set((state) => {
-      const updated = state.recipes.map((r) =>
-        r.id === updatedRecipe.id ? updatedRecipe : r
-      );
-      return {
-        recipes: updated,
-        filteredRecipes: get().applyFilter(updated, state.searchTerm),
-      };
-    }),
+  deleteRecipe: (id) => {
+    const updated = get().recipes.filter((r) => r.id !== id);
+    return set({
+      recipes: updated,
+      filteredRecipes: get().applyFilter(updated, get().searchTerm),
+      favorites: get().favorites.filter((fid) => fid !== id),
+    });
+  },
+
+  updateRecipe: (updatedRecipe) => {
+    const updated = get().recipes.map((r) =>
+      r.id === updatedRecipe.id ? updatedRecipe : r
+    );
+    return set({
+      recipes: updated,
+      filteredRecipes: get().applyFilter(updated, get().searchTerm),
+    });
+  },
 
   setSearchTerm: (term) =>
-    set((state) => ({
+    set({
       searchTerm: term,
-      filteredRecipes: get().applyFilter(state.recipes, term),
-    })),
+      filteredRecipes: get().applyFilter(get().recipes, term),
+    }),
 
   applyFilter: (recipes, term) =>
     recipes.filter((r) =>
@@ -46,8 +47,30 @@ export const useRecipeStore = create((set, get) => ({
     ),
 
   setRecipes: (recipes) =>
-    set((state) => ({
+    set({
       recipes,
-      filteredRecipes: get().applyFilter(recipes, state.searchTerm),
+      filteredRecipes: get().applyFilter(recipes, get().searchTerm),
+    }),
+
+  addFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: state.favorites.includes(recipeId)
+        ? state.favorites
+        : [...state.favorites, recipeId],
     })),
+
+  removeFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: state.favorites.filter((id) => id !== recipeId),
+    })),
+
+  generateRecommendations: () => {
+    const { recipes, favorites } = get();
+    const recommended = recipes.filter(
+      (r) =>
+        !favorites.includes(r.id) &&
+        favorites.some((fid) => r.title.includes(fid)) 
+    );
+    set({ recommendations: recommended });
+  },
 }));
