@@ -22,6 +22,7 @@ export default function Search() {
     } else {
       setError("Looks like we can't find the user");
     }
+
     setLoading(false);
   };
 
