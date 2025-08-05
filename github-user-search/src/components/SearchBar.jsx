@@ -19,6 +19,7 @@ export default function SearchBar({ onSearch }) {
         onChange={(e) => setUsername(e.target.value)}
       />
       <button type="submit">Search</button>
+    
     </form>
   );
 }
