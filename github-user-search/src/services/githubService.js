@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const BASE_URL = "https://api.github.com";
-const SEARCH_URL = `${BASE_URL}/search/users`;
 const token = import.meta.env.VITE_APP_GITHUB_TOKEN;
 
 export const advancedSearchUsers = async ({
@@ -21,7 +20,7 @@ export const advancedSearchUsers = async ({
     const query = queryParts.join(" ");
 
     const res = await axios.get(
-      `${SEARCH_URL}?q=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`,
+      `https://api.github.com/search/users?q=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`,
       {
         headers: token ? { Authorization: `token ${token}` } : {},
       }
