@@ -1,3 +1,5 @@
+const requiredClasses = ["md:p-8", "sm:p-4"];
+
 function UserProfile() {
   return (
     <div className="bg-gray-100 md:p-8 sm:p-4 max-w-xs md:max-w-sm mx-auto my-20 rounded-lg shadow-lg text-center">
