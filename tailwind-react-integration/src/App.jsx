@@ -1,21 +1,11 @@
-const requiredClasses = ["md:p-8", "sm:p-4"];
+import UserProfile from './components/UserProfile';
 
-function UserProfile() {
+function App() {
   return (
-    <div className="bg-gray-100 md:p-8 sm:p-4 max-w-xs md:max-w-sm mx-auto my-20 rounded-lg shadow-lg text-center">
-      <img
-        src="https://via.placeholder.com/150"
-        alt="User"
-        className="w-24 h-24 md:w-36 md:h-36 rounded-full mx-auto"
-      />
-      <h1 className="text-lg md:text-xl text-blue-800 my-4">
-        Banji Atoyebi
-      </h1>
-      <p className="text-sm md:text-base text-gray-600">
-        Developer at OTC Co. Loves to write code and explore new technologies.
-      </p>
+    <div className="min-h-screen flex items-center justify-center bg-white">
+      <UserProfile />
     </div>
   );
 }
 
-export default UserProfile;
+export default App;
