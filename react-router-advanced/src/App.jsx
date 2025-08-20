@@ -2,9 +2,11 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import BlogPost from "./pages/BlogPost";
-import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./components/Profile";
+import ProfileDetails from "./components/ProfileDetails";
+import ProfileSettings from "./components/ProfileSettings";
 
 export default function App() {
   return (
@@ -20,21 +22,21 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-
-          
           <Route path="/posts/:id" element={<BlogPost />} />
 
           
           <Route
-            path="/profile/*"
+            path="/profile"
             element={
               <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route path="details" element={<ProfileDetails />} />
+            <Route path="settings" element={<ProfileSettings />} />
+          </Route>
 
-          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
